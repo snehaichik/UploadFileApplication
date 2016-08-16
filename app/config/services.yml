@@ -1,9 +1,17 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    aws_key: 'AKIAIXABNDL3URAUS3NQ'
+    aws_secret_key: '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'
 
 services:
     app.file_upload:
         class:  AppBundle\Uploader\FileUpload
         arguments: ['@foo_filesystem']
+
+    amazonS3:
+        class: AmazonS3
+        arguments:
+            options:
+                key:      '%aws_key%'
+                secret:   '%aws_secret_key%'

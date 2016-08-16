@@ -20,13 +20,11 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $data = $form->getData();
-            $url =  $this->get('app.file_upload')->upload($data['file']);
+            $url =  $this->get('app.file_upload')->upload($form['file']->getData());
 
             return $this->redirect($request->headers->get('referer'));
         }
 
-        // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'form' => $form->createView(),
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
