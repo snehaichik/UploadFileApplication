@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\UploadFileType;
 use AppBundle\Uploader\FileUpload;
+use AppBundle\Entity\Files;
 
 class DefaultController extends Controller
 {
@@ -19,8 +20,17 @@ class DefaultController extends Controller
         $form = $this->createForm(UploadFileType::class);
         $form->handleRequest($request);
 
+        $file = new Files();
+
         if ($form->isSubmitted()) {
+
             $url =  $this->get('app.file_upload')->upload($form['file']->getData());
+
+            $file->setFileName($url);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($file);
+            $em->flush();
 
             return $this->redirect($request->headers->get('referer'));
         }
