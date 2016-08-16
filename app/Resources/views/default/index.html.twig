@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form class="form-inline" method="post" action="{{ path('homepage') }}" novalidate>
+        {{ form_row(form._token) }}
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    {{ form_label(form.file) }}
+                    {{ form_widget(form.file, {attr: {placeholder: "file"}}) }}
+                    {{ form_errors(form.file) }}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {{ form_widget(form.submit, {attr: {class: 'btn-white btn-white-center col-md-4'}, label: 'Upload'}) }}
+    </form>
+{% endblock %}
+
+
